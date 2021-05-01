@@ -9,6 +9,7 @@ use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Attribute\Repositories\AttributeFamilyRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Illuminate\Support\Str;
+use Faker\Factory as Faker;
 
 use function Arete\LadiesHub\Helpers\difference;
 
@@ -39,13 +40,16 @@ class GenerateFashionProduct
      * @var \Webkul\Product\Repositories\AttributeFamilyRepository
      */
     protected $attributeFamilyRepository;
-
+    
+    protected $faker;
+    
     /**
      * Product Attribute Types
      * 
      * @var array
      */
     protected $types;
+
 
 
     public static $typeLookUp = [];
@@ -61,11 +65,14 @@ class GenerateFashionProduct
     public function __construct(
         ProductRepository $productRepository,
         AttributeRepository $attributeRepository,
-        AttributeFamilyRepository $attributeFamilyRepository
+        AttributeFamilyRepository $attributeFamilyRepository,
+        Faker $faker
+
     ) {
         $this->productRepository = $productRepository;
         $this->attributeRepository = $attributeRepository;
         $this->attributeFamilyRepository = $attributeFamilyRepository;
+        $this->faker = $faker;
 
         if (!count(self::$typeLookUp)) {
             $this->createTypeLookUp();

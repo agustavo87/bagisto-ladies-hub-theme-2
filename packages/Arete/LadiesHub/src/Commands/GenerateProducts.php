@@ -2,8 +2,9 @@
 
 namespace Arete\LadiesHub\Commands;
 
+use Arete\LadiesHub\Generators\GenerateDemoBrand;
 use Illuminate\Console\Command;
-use Arete\LadiesHub\Helpers\GenerateFashionProduct;
+use Arete\LadiesHub\Generators\GenerateGenericProduct;
 
 class GenerateProducts extends Command
 {
@@ -22,36 +23,14 @@ class GenerateProducts extends Command
     protected $description = 'Generate Products for Ladies Hub';
 
     /**
-     * GenerateProduct instance
-     */
-    protected $generateProduct;
-
-    /**
-     * ProductRepository instance
-     */
-    protected $product;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(GenerateFashionProduct $generateProduct)
-    {
-        parent::__construct();
-
-        $this->generateProduct = $generateProduct;
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle()
-    {
-       print_r($this->generateProduct->createLingerieAttributeFamily());
-        return true;
+    public function handle(
+        GenerateGenericProduct $generateProduct, 
+        GenerateDemoBrand $generateBrand
+    ) {
         if (! is_string($this->argument('value')) || ! is_numeric($this->argument('quantity'))) {
             $this->info('Illegal parameters or value of parameters are passed');
         } else {
@@ -59,8 +38,6 @@ class GenerateProducts extends Command
             if (strtolower($this->argument('value')) == 'product' || strtolower($this->argument('value')) == 'products') {
                 $quantity = (int)$this->argument('quantity');
 
-                // @see https://laravel.com/docs/6.x/artisan#writing-output
-                // @see https://symfony.com/doc/current/components/console/helpers/progressbar.html
                 $bar = $this->output->createProgressBar($quantity);
 
                 $this->line("Generating $quantity {$this->argument('value')}.");
@@ -68,10 +45,11 @@ class GenerateProducts extends Command
                 $bar->start();
 
                 $generatedProducts = 0;
-                $this->generateProduct->generateDemoBrand();
+                $brand = $generateBrand->create("Ladies Hub Joy Gifts");
+
                 while ($quantity > 0) {
                     try {
-                        $result = $this->generateProduct->create();
+                        $result = $generateProduct->create($brand->id);
                         $generatedProducts++;
                         $bar->advance();
                     } catch (\Exception $e) {
@@ -82,7 +60,6 @@ class GenerateProducts extends Command
                     $quantity--;
                 }
 
-
                 if ($result) {
                     $bar->finish();
                     $this->info("\n$generatedProducts Product(s) created successfully.");
@@ -92,8 +69,6 @@ class GenerateProducts extends Command
             } else {
                 $this->line('Sorry, this generate option is invalid.');
             }
-
-            print_r($this->generateProduct->createAttributes());
         }
     }
 }
