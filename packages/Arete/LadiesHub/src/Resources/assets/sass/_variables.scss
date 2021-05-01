@@ -1,0 +1,108 @@
+// @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap");
+
+$black:     #121212;
+
+$gray-50:   #f8fafc;
+$gray-100:  #f1f5f9;
+$gray-200:  #e2e8f0;
+$gray-300:  #cbd5e1;
+$gray-400:  #94a3b8;
+$gray-500:  #64748b;
+$gray-600:  #334155;
+$gray-800:  #1e293b;
+
+
+$true-gray-50:  #fafafa;
+$true-gray-100: #f5f5f5;
+$true-gray-200: #e5e5e5;
+$true-gray-300: #d4d4d4;
+$true-gray-400: #a3a3a3;
+$true-gray-500: #737373;
+$true-gray-600: #525252;
+$true-gray-700: #404040;
+$true-gray-800: #262626;
+$true-gray-900: #171717;
+
+$purple-400:    #c084fc;
+$purple-500:    #a855f7;
+$purple-600:    #9333ea;
+$purple-900:    #581c87;
+
+$salmon-pink-600:   #ff817d;
+$salmon-pink:       #FC6868;
+
+
+// $font-montserrat: "Montserrat", sans-serif;
+$system-sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+$system-serif: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+
+
+// $display-font-family: 'Alex Brush', $system-serif; 
+$sans-font-family: 'Poppins', sans-serif;
+
+$font-light: $true-gray-400;
+$font-medium: $true-gray-500;
+$font-dark: $true-gray-800;
+
+$font-w-thin: 200;
+$font-w-base: 400;
+$font-w-strong: 500;
+$font-w-bold: 700;
+
+$font-heading: $sans-font-family;
+
+$other-font-color: $font-light;
+$title-color: $font-medium;
+$link-color: #2650EF;
+$bold-color: $gray-600;
+
+$font-base-px: 16px;
+$font-base: 1rem;
+$font-sm: 0.8rem;
+$font-lg: 1.25rem;
+$font-xl: 2rem;
+$font-2xl: 3rem;
+$font-3xl: 4rem;
+
+$x1: $font-base-px;
+$x1_5: $font-base-px * 1.5;
+$x1_25: $font-base-px * 1.25;
+$x2: $font-base-px * 2;
+$x3_5: $font-base-px * 3.5;
+
+$info-color: #204d74;
+
+
+//shop variables
+$brand-color: $purple-900;
+$background-color: $true-gray-200;
+$product-image-background: white;
+$review-details: $gray-400;
+
+$icon-size: $x1_5;
+$account-icon-size: $x2;
+$account-border-size: 1px;
+
+$border-color: $gray-100;
+$disc-price: #FF6472;
+$radio-button: #FF6472;
+$radio-button-disabled: rgba(255, 100, 113, 0.400);
+$danger-color: rgb(251, 57, 73);
+$disc-price-pro: $gray-400;
+$address-card-border-color: $gray-100;
+$sticker-color: #2ED04C;
+$stock-color: #4CAF50;
+$rating-color: #FC6868;
+$star-color: $gray-100;
+$error-color: #ff5656;
+$line-bar-color: $gray-100;
+$btn-background-color: #fff;
+$ltgray: $gray-100;
+$listcolor: $gray-600;
+$spnr-color: $gray-300;
+$shadow-color:$gray-200;
+$shadow-color1:$gray-300;
+$outline-hvr: $gray-300;
+$slider-color: rgb(255, 100, 114);
+
+
