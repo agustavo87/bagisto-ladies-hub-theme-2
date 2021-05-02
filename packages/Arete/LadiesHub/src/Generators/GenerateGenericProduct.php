@@ -34,7 +34,6 @@ class GenerateGenericProduct extends GenerateEntity
      */
     protected $types;
 
-
     /**
      * Handlers of diferent types of attributes of the product
      * 
@@ -48,7 +47,6 @@ class GenerateGenericProduct extends GenerateEntity
      * @var int|null|
      */
     protected static ?int $brand_id = null;
-
 
     protected function boot()
     {
@@ -76,25 +74,22 @@ class GenerateGenericProduct extends GenerateEntity
 
     protected function getBrandID()
     {
-        if (!self::$brand_id) {
-            $brandAttribute = Attribute::where(['code' => 'brand'])->first();
-            if (! AttributeOption::where(['attribute_id' => $brandAttribute->id])->exists()) {
-                echo "\nGenerateGenericProduct: generando demo brand\n";
-                $brand = $this->app->make(GenerateDemoBrand::class)->create();
-            } else {
-                $brand = AttributeOption::where(['attribute_id' => $brandAttribute->id])->first();
-            }
-            return self::$brand_id = $brand->id;
-        }
+        if (self::$brand_id) return self::$brand_id;
+
+        $brandAttribute = Attribute::where(['code' => 'brand'])->first();
+        if (AttributeOption::where(['attribute_id' => $brandAttribute->id])->exists()) {
+            return AttributeOption::where(['attribute_id' => $brandAttribute->id])->first()->id;
+        } 
         
-        return self::$brand_id;
+        $brand = $this->app->make(GenerateDemoBrand::class)->create();
+        return self::$brand_id = $brand->id;
     }
 
     /**
      * @param int $brand_id The id of the AttributeOption of the 
      *                      brand attribute.
      * 
-     * @return void
+     * @return \Webkul\Product\Models\Product
      */
     public function create($brand_id = null)
     {
@@ -105,7 +100,6 @@ class GenerateGenericProduct extends GenerateEntity
         ])->first();
 
         $attributes = getFamilyAttributes($attributeFamily);
-
 
         $faker = $this->faker;
 
@@ -273,5 +267,4 @@ class GenerateGenericProduct extends GenerateEntity
             }
         ];
     }
-
 }

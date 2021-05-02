@@ -2,8 +2,8 @@
 
 namespace Arete\LadiesHub\Commands;
 
-use Arete\LadiesHub\Generators\GenerateDemoBrand;
 use Illuminate\Console\Command;
+use Arete\LadiesHub\Generators\GenerateDemoBrand;
 use Arete\LadiesHub\Generators\GenerateGenericProduct;
 
 class GenerateProducts extends Command
