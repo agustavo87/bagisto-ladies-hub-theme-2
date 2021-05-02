@@ -225,6 +225,11 @@ class GenerateGenericProduct extends GenerateEntity
                 }
             },
             'boolean' => function ($attribute, &$data, $faker, $sku, $date, $specialFrom, $specialTo) {
+                $code = $attribute->code;
+                if($code == 'status') {
+                    $data[$code] = true;
+                    return;
+                }
                 $data[$attribute->code] = $faker->boolean;
             },
             'price' => function ($attribute, &$data, $faker, $sku, $date, $specialFrom, $specialTo)  {
