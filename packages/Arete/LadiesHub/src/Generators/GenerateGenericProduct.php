@@ -6,6 +6,8 @@ namespace Arete\LadiesHub\Generators;
 
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Attribute\Repositories\AttributeFamilyRepository;
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Models\AttributeOption;
 
 use function Arete\LadiesHub\Helpers\getFamilyAttributes;
 
@@ -70,12 +72,22 @@ class GenerateGenericProduct extends GenerateEntity
             $this->createTypeLookUp();
         }
 
+    }
 
+    protected function getBrandID()
+    {
         if (!self::$brand_id) {
-            $brand = $this->app->make(GenerateDemoBrand::class)->create();
+            $brandAttribute = Attribute::where(['code' => 'brand'])->first();
+            if (! AttributeOption::where(['attribute_id' => $brandAttribute->id])->exists()) {
+                echo "\nGenerateGenericProduct: generando demo brand\n";
+                $brand = $this->app->make(GenerateDemoBrand::class)->create();
+            } else {
+                $brand = AttributeOption::where(['attribute_id' => $brandAttribute->id])->first();
+            }
+            return self::$brand_id = $brand->id;
         }
         
-        self::$brand_id = $brand->id;
+        return self::$brand_id;
     }
 
     /**
@@ -86,7 +98,7 @@ class GenerateGenericProduct extends GenerateEntity
      */
     public function create($brand_id = null)
     {
-        $brand_id = $brand_id ?? self::$brand_id;
+        $brand_id = $brand_id ?? $this->getBrandID();
 
         $attributeFamily = $this->attributeFamilyRepository->findWhere([
             'code' => 'default',

@@ -17,11 +17,19 @@ class GenerateDemoBrand extends GenerateEntity
      */
     public function create(string $name = "")
     {
+        
         $brandAttribute = Attribute::where(['code' => 'brand'])->first();
+        $name = $name ? $name : ucwords($this->faker->words(3,true));
+        echo "\nGenerateDemoBrand: Generando marca: " . $name . "\n"; 
 
-        return AttributeOption::create([
-            'admin_name'   => $name ?? $this->faker->words(3,true),
-            'attribute_id' => $brandAttribute->id,
-        ]);
+        if (!AttributeOption::where(['admin_name' => $name])->exists()) {
+            return AttributeOption::create([
+                'admin_name'   => $name,
+                'attribute_id' => $brandAttribute->id,
+            ]);
+        } else {
+            return AttributeOption::where(['admin_name' => $name])->first();
+        }
+
     }
 }

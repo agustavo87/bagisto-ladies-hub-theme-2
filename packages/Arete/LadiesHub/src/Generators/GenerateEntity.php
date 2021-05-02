@@ -22,10 +22,9 @@ abstract class GenerateEntity {
     protected $faker;
 
     public function __construct(
-        LaravelApplication $app,
-        Faker $faker
+        LaravelApplication $app
     ) {
-        $this->faker = $faker->create();
+        $this->faker = Faker::create();
         $this->app = $app;
         $this->boot();
     }
