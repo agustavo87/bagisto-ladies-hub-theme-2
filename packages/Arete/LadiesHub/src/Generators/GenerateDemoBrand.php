@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Arete\LadiesHub\Generators;
 
+use Illuminate\Support\Facades\DB;
 use Webkul\Attribute\Models\Attribute;
 use Webkul\Attribute\Models\AttributeOption;
 
@@ -25,10 +26,17 @@ class GenerateDemoBrand extends GenerateEntity
         $name = $name ? $name : ucwords($this->faker->words(3,true));
 
         if (!AttributeOption::where(['admin_name' => $name])->exists()) {
-            return AttributeOption::create([
+            $attributeOption = AttributeOption::create([
                 'admin_name'   => $name,
                 'attribute_id' => $brandAttribute->id,
+                'sort_order' => 1
             ]);
+            DB::table('attribute_option_translations')->insert([
+                    'locale'              => 'en',
+                    'label'               => $name,
+                    'attribute_option_id' => $attributeOption->id
+            ]);
+            return $attributeOption;
         } else {
             return AttributeOption::where(['admin_name' => $name])->first();
         }

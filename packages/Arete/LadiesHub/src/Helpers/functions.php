@@ -28,3 +28,18 @@ function getFamilyAttributes($attributeFamily)
 
     return $attributes;
 }
+
+/**
+ * Get the element of an array if it exist.
+ * 
+ * reutrn null otherwise
+ * 
+ * @param mixed $key
+ * @param array $array
+ * 
+ * @return mixed
+ */
+function getIfExist($key, array $array)
+{
+    return array_key_exists($key, $array) && $array[$key];
+}

@@ -9,7 +9,7 @@ use Webkul\Attribute\Repositories\AttributeFamilyRepository;
 use Webkul\Attribute\Models\Attribute;
 use Webkul\Attribute\Models\AttributeOption;
 
-use function Arete\LadiesHub\Helpers\getFamilyAttributes;
+use function Arete\LadiesHub\Helpers\{getFamilyAttributes, getIfExist};
 
 class GenerateGenericProduct extends GenerateEntity 
 {
@@ -123,7 +123,7 @@ class GenerateGenericProduct extends GenerateEntity
 
         // special price has to be less than price and not less than cost
         // cost has to be less than price
-        if($data['special_price'] && $data['price'] && $data['cost']) {
+        if( ( (bool) getIfExist('special_price', $data) ) && $data['price'] && $data['cost']) {
             if ($data['cost'] >= $data['price'] || $data['cost'] < ($data['price']*0.3)) {
                 $data['cost'] = $data['price'] * 0.75;
             }
@@ -228,13 +228,24 @@ class GenerateGenericProduct extends GenerateEntity
                 $data[$attribute->code] = $faker->boolean;
             },
             'price' => function ($attribute, &$data, $faker, $sku, $date, $specialFrom, $specialTo)  {
-                // if($attribute->code['special_price']) {
-                //     if($faker->boolean()) {
-                //         $data['special_price'] = rand(5,200);
-                //     }
-                //     return;
-                // }
-                $data[$attribute->code] = rand(5,200);
+                $codigo = $attribute->code;
+                $price = '';
+                echo "\nEstableciendo price: {$codigo}\n";
+                if($codigo == 'special_price') {
+                    echo "\nEstableciendo special price\n";
+                    $si = $faker->boolean();
+                    echo "\n Resultado de faker:".  ($si ? 'true' : 'false') . "\n";
+                    if($si) {
+                        $price= rand(5,200);
+                    } else {
+                        $price = '';
+                    }
+                } else {
+                    $price = rand(5,200);
+                }
+                echo "\n Precio final: {$price}.\n";
+                $data[$codigo] = $price;
+                return;
             },
             'datetime' => function ($attribute, &$data, $faker, $sku, $date, $specialFrom, $specialTo)  {
                 $data[$attribute->code] = $date->toDateTimeString();
