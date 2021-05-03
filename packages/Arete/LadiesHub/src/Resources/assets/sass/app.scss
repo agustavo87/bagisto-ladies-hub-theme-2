@@ -1737,6 +1737,9 @@ section.slider-block {
                             border-bottom: 1px solid $border-color;
                             padding: 8px 16px;
                         }
+                        .dropdown-content .item-image {
+                            flex: 1;
+                        }
 
                         .dropdown-content .item img {
                             height: 75px;
@@ -1746,26 +1749,38 @@ section.slider-block {
 
                         .dropdown-content .item-details {
                             height: auto;
+                            flex: 2;
+                        }
+
+                        .item-details {
+                            line-height: 1.5em;
                         }
 
                         .item-details .item-name {
-                            font-size: 1rem;
-                            font-weight: $true-gray-500;
-                            color: $font-medium;
+                            font-size: 0.8rem;
+                            font-weight: $font-w-base ;
+                            color: $font-dark;
+
+                            letter-spacing: 0.06em;
                             // margin-bottom: 8px;
                         }
 
-                        .item-details .item-options {
-                            margin-bottom: 8px;
-                        }
+                        // .item-details .item-options {
+                        //     // margin-bottom: 8px;
+                        // }
 
                         .item-details .item-price {
-                            margin-bottom: 8px;
+                            // margin-bottom: 8px;
+                            font-size: .8rem;
+                            color: $true-gray-500;
                         }
 
                         .item-details .item-qty {
                             font-weight: $font-w-base;
-                            margin-bottom: 8px;
+                            font-size: .8rem;
+                            padding-top: 0.25rem;
+                            color: $true-gray-500;
+                            // margin-bottom: 8px;
                         }
 
                         .dropdown-footer {
@@ -2734,14 +2749,14 @@ section.product-detail {
 
                         .thumb-frame {
                             background: $background-color;
-                            border: 1px solid transparent;
+                            // border: 1px solid transparent;
                             width: 7rem;
                             max-height: 7rem;
                             margin: 2px;
                             
 
                             &.active {
-                                border-color: $brand-color;
+                                border: 1px solid $true-gray-300;
                             }
 
                             img {
