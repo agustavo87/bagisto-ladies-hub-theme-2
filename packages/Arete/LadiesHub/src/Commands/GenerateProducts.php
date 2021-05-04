@@ -3,8 +3,6 @@
 namespace Arete\LadiesHub\Commands;
 
 use Illuminate\Console\Command;
-use Arete\LadiesHub\Generators\GenerateDemoBrand;
-use Arete\LadiesHub\Generators\GenerateGenericProduct;
 
 class GenerateProducts extends Command
 {
@@ -13,7 +11,7 @@ class GenerateProducts extends Command
      *
      * @var string
      */
-    protected $signature = 'ladieshub:generate {value} {quantity}';
+    protected $signature = 'ladieshub:generate {value} {quantity} {--class=default}';
 
     /**
      * The console command description.
@@ -27,10 +25,16 @@ class GenerateProducts extends Command
      *
      * @return int
      */
-    public function handle(
-        GenerateGenericProduct $generateProduct, 
-        GenerateDemoBrand $generateBrand
-    ) {
+    public function handle() {
+        if($this->option('class') == 'default') {
+            $productClass = \Arete\LadiesHub\Generators\GenerateGenericProduct::class;
+        } else {
+            $productClass = $this->option('class');
+        }
+        $generateProduct = app($productClass);
+        $this->line("generando: {$productClass}") ;
+
+        
         if (! is_string($this->argument('value')) || ! is_numeric($this->argument('quantity'))) {
             $this->info('Illegal parameters or value of parameters are passed');
         } else {
@@ -45,11 +49,10 @@ class GenerateProducts extends Command
                 $bar->start();
 
                 $generatedProducts = 0;
-                $brand = $generateBrand->create("Ladies Hub Joy Gifts");
 
                 while ($quantity > 0) {
                     try {
-                        $result = $generateProduct->create($brand->id);
+                        $result = $generateProduct->create();
                         $generatedProducts++;
                         $bar->advance();
                     } catch (\Exception $e) {
