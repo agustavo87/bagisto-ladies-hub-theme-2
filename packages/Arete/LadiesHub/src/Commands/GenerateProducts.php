@@ -51,15 +51,9 @@ class GenerateProducts extends Command
                 $generatedProducts = 0;
 
                 while ($quantity > 0) {
-                    // try {
                         $result = $generateProduct->create();
                         $generatedProducts++;
                         $bar->advance();
-                    // } catch (\Exception $e) {
-                        // report($e);
-                    //     continue;
-                    // }
-
                     $quantity--;
                 }
 
